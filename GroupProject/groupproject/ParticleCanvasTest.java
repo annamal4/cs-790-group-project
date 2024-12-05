@@ -15,7 +15,7 @@ public class ParticleCanvasTest {
         // Create an array of particles
         Particle[] particles = new Particle[5];
         for (int i = 0; i < particles.length; i++) {
-            particles[i] = new Particle(100, 100);
+            particles[i] = new Particle(100, 100, i+1);
         }
 
         // Set particles and verify

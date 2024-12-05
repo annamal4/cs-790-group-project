@@ -51,7 +51,7 @@ class ParticleApp extends JFrame {
 	    if (threads == null) {
 	      Particle[] particles = new Particle[n];
 	      for (int i = 0; i < n; ++i) 
-	        particles[i] = new Particle(200, 200);//400 bad
+	        particles[i] = new Particle(200, 200, i+1);//400 bad
 	      canvas.setParticles(particles);
 
 	      threads = new Thread[n];
@@ -59,6 +59,7 @@ class ParticleApp extends JFrame {
 	        threads[i] = makeThread(particles[i]);
 	        threads[i].start();
 	      }
+  	      System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Thread Creation Complete");
 	    }
 	  }
 
@@ -82,11 +83,11 @@ class ParticleApp extends JFrame {
 	            	    var particles = canvas.getParticles();
 	            	    int count = 1;
 	            	    for(Particle p: particles) {
-		            	    System.out.println("Thread "+ count+" Ended on Step "+ p.getSteps());
+		            	    System.out.println("--Thread "+ count+" Ended on Step "+ p.getSteps()+"--");
 		            	    count++;
 	            	    }
 
-	            	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Elapsed Time= " + Duration.between(start, end).getSeconds()+ " seconds");
+	            	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Elapsed Time = " + Duration.between(start, end).getSeconds()+ " seconds");
 	            	    
 	                }
 	            };

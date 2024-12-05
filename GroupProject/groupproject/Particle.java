@@ -1,6 +1,7 @@
 package groupproject;
 
 import java.awt.Graphics;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 
@@ -8,12 +9,15 @@ public class Particle {
 	  protected int x;
 	  protected int y;
 	  protected int steps;
+	  protected int id;
+	  protected boolean complete = false;
 	  protected final Random rng = new Random();
 	 
-	  public Particle(int initialX, int initialY) { 
+	  public Particle(int initialX, int initialY, int particleId) { 
 	    x = initialX;
 	    y = initialY;
 	    steps = 0;
+	    id = particleId;
 	  }
 
 		public int getX() {
@@ -33,6 +37,11 @@ public class Particle {
 			  x += rng.nextInt(10) - 5;
 			  y += rng.nextInt(20) - 10;
 			  steps++;//so out of boundary particles will not move anymore
+		  }
+		  else if(complete==false){
+			  DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
+			  System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Thread "+ id+" hit the boundary at ("+x+","+y+") on step number "+ steps+".");
+			  complete = true;
 		  }
 	  }
 

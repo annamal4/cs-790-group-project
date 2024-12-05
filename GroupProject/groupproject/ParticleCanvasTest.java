@@ -10,7 +10,8 @@ public class ParticleCanvasTest {
     @Test
     void testSetAndGetParticles() {
         ParticleCanvas canvas = new ParticleCanvas(400);
-
+        //test 1
+        //test1
         // Create an array of particles
         Particle[] particles = new Particle[5];
         for (int i = 0; i < particles.length; i++) {

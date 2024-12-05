@@ -3,6 +3,8 @@ package groupproject;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -10,6 +12,7 @@ import javax.swing.SwingUtilities;
 class ParticleApp extends JFrame {
 
 	  protected Thread[] threads;
+	  protected static LocalDateTime start;
 
 	  protected final static ParticleCanvas canvas = new ParticleCanvas(400);
 	  
@@ -39,7 +42,8 @@ class ParticleApp extends JFrame {
 	  public synchronized void start() {
 
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
-	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Started");
+	    this.start = java.time.LocalDateTime.now();
+	    System.out.println(start.format(myFormatObj)+": Particle App Started");
 	    
 	    
 	    int n = 10; // just for demo
@@ -64,8 +68,6 @@ class ParticleApp extends JFrame {
 	        threads[i].interrupt();
 	      threads = null;
 	    }
-	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
-	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Stopped");
 	    
 	  }
 	  
@@ -75,14 +77,16 @@ class ParticleApp extends JFrame {
 	            WindowAdapter wa = new WindowAdapter() {
 	                public void windowClosing(WindowEvent e) {
 	                	DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
-	            	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Ended");
+	                	LocalDateTime end = java.time.LocalDateTime.now();
+	            	    System.out.println(end.format(myFormatObj)+": Particle App Ended");
 	            	    var particles = canvas.getParticles();
 	            	    int count = 1;
 	            	    for(Particle p: particles) {
-
 		            	    System.out.println("Thread "+ count+" Ended on Step "+ p.getSteps());
 		            	    count++;
 	            	    }
+
+	            	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Elapsed Time= " + Duration.between(start, end).getSeconds()+ " seconds");
 	            	    
 	                }
 	            };

@@ -29,7 +29,7 @@ public class Particle {
 		}
 
 	  public synchronized void move() {
-		  if(x<410 && y<410 && x>-10 && y>-10) {
+		  if(x<411 && y<411 && x>-11 && y>-11) {
 			  x += rng.nextInt(10) - 5;
 			  y += rng.nextInt(20) - 10;
 			  steps++;//so out of boundary particles will not move anymore

@@ -1,0 +1,23 @@
+07-12-2024 14:32:04.9298560004: File already exists. Delete and create again.
+07-12-2024 14:32:05.996250005: Particle App Started
+07-12-2024 14:32:05.1085570005: Thread Creation Complete
+07-12-2024 14:32:32.5720200032: Thread 1 hit the boundary at (63,-12) on step number 259.
+07-12-2024 14:32:32.53314300032: Thread 3 hit the boundary at (-12,111) on step number 264.
+07-12-2024 14:32:32.84491900032: Thread 5 hit the boundary at (-10,-13) on step number 267.
+07-12-2024 14:32:38.44419600038: Thread 2 hit the boundary at (-11,35) on step number 321.
+07-12-2024 14:32:43.1261700043: Thread 9 hit the boundary at (53,-14) on step number 364.
+07-12-2024 14:32:43.36275200043: Thread 4 hit the boundary at (-11,106) on step number 368.
+07-12-2024 14:32:43.64651500043: Thread 6 hit the boundary at (6,-12) on step number 371.
+07-12-2024 14:32:45.92200300045: Thread 8 hit the boundary at (-14,36) on step number 393.
+07-12-2024 14:32:47.68271400047: Particle App Ended
+--Thread 1 Ended on Step 259--
+--Thread 2 Ended on Step 321--
+--Thread 3 Ended on Step 264--
+--Thread 4 Ended on Step 368--
+--Thread 5 Ended on Step 267--
+--Thread 6 Ended on Step 371--
+--Thread 7 Ended on Step 410--
+--Thread 8 Ended on Step 393--
+--Thread 9 Ended on Step 364--
+--Thread 10 Ended on Step 410--
+07-12-2024 14:32:47.68421600047: Particle App Elapsed Time = 42 seconds

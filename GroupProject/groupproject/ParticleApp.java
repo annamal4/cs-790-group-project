@@ -1,6 +1,9 @@
 package groupproject;
 
 import java.awt.BorderLayout;
+import java.io.File;  // Import the File class
+import java.io.FileWriter;
+import java.io.IOException;  // Import the IOException class to handle errors
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.Duration;
@@ -13,6 +16,7 @@ class ParticleApp extends JFrame {
 
 	  protected Thread[] threads;
 	  protected static LocalDateTime start;
+	  protected static FileLogger fl;
 
 	  protected final static ParticleCanvas canvas = new ParticleCanvas(400);
 	  
@@ -21,6 +25,7 @@ class ParticleApp extends JFrame {
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        add(canvas, BorderLayout.CENTER);
 	        setSize(400, 400);
+	        fl = new FileLogger();
 	    }
 
 	  protected Thread makeThread(final Particle p) {
@@ -43,7 +48,9 @@ class ParticleApp extends JFrame {
 
 	    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
 	    this.start = java.time.LocalDateTime.now();
-	    System.out.println(start.format(myFormatObj)+": Particle App Started");
+	    String log = start.format(myFormatObj)+": Particle App Started";
+	    System.out.println(log);
+	    fl.write(log);
 	    
 	    
 	    int n = 10; // just for demo
@@ -51,7 +58,7 @@ class ParticleApp extends JFrame {
 	    if (threads == null) {
 	      Particle[] particles = new Particle[n];
 	      for (int i = 0; i < n; ++i) 
-	        particles[i] = new Particle(200, 200, i+1);//400 bad
+	        particles[i] = new Particle(200, 200, i+1, fl);//400 bad
 	      canvas.setParticles(particles);
 
 	      threads = new Thread[n];
@@ -59,7 +66,9 @@ class ParticleApp extends JFrame {
 	        threads[i] = makeThread(particles[i]);
 	        threads[i].start();
 	      }
-  	      System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Thread Creation Complete");
+  	    log = java.time.LocalDateTime.now().format(myFormatObj)+": Thread Creation Complete";
+  	    System.out.println(log);
+  	    fl.write(log);
 	    }
 	  }
 
@@ -79,16 +88,22 @@ class ParticleApp extends JFrame {
 	                public void windowClosing(WindowEvent e) {
 	                	DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
 	                	LocalDateTime end = java.time.LocalDateTime.now();
-	            	    System.out.println(end.format(myFormatObj)+": Particle App Ended");
+	            	    String log = end.format(myFormatObj)+": Particle App Ended";
+	            	    System.out.println(log);
+	            	    fl.write(log);
 	            	    var particles = canvas.getParticles();
 	            	    int count = 1;
 	            	    for(Particle p: particles) {
-		            	    System.out.println("--Thread "+ count+" Ended on Step "+ p.getSteps()+"--");
+		            	    log = "--Thread "+ count+" Ended on Step "+ p.getSteps()+"--";
+		            	    System.out.println(log);
+		            	    fl.write(log);
 		            	    count++;
 	            	    }
 
-	            	    System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Elapsed Time = " + Duration.between(start, end).getSeconds()+ " seconds");
-	            	    
+	            	    log = java.time.LocalDateTime.now().format(myFormatObj)+": Particle App Elapsed Time = " + Duration.between(start, end).getSeconds()+ " seconds";
+	            	    System.out.println(log);
+	            	    fl.write(log);
+	            	    fl.writeToFile();
 	                }
 	            };
 	            app.addWindowListener(wa);

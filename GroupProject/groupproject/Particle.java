@@ -12,12 +12,21 @@ public class Particle {
 	  protected int id;
 	  protected boolean complete = false;
 	  protected final Random rng = new Random();
-	 
+	  protected FileLogger fl;
+	  
 	  public Particle(int initialX, int initialY, int particleId) { 
+		    x = initialX;
+		    y = initialY;
+		    steps = 0;
+		    id = particleId;
+	  }
+	  
+	  public Particle(int initialX, int initialY, int particleId, FileLogger fl) { 
 	    x = initialX;
 	    y = initialY;
 	    steps = 0;
 	    id = particleId;
+	    this.fl = fl;
 	  }
 
 		public int getX() {
@@ -31,6 +40,7 @@ public class Particle {
 		public int getY() {
 			return this.y;
 		}
+		
 
 	  public synchronized void move() {
 		  if(x<411 && y<411 && x>-11 && y>-11) {
@@ -40,7 +50,9 @@ public class Particle {
 		  }
 		  else if(complete==false){
 			  DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss.ns");
-			  System.out.println(java.time.LocalDateTime.now().format(myFormatObj)+": Thread "+ id+" hit the boundary at ("+x+","+y+") on step number "+ steps+".");
+			  String log = java.time.LocalDateTime.now().format(myFormatObj)+": Thread "+ id+" hit the boundary at ("+x+","+y+") on step number "+ steps+".";
+			  System.out.println(log);
+			  fl.write(log);
 			  complete = true;
 		  }
 	  }
